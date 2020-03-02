@@ -6,12 +6,11 @@ import inspect
 import re
 import socket
 import time
+
+
 HEADER_SIZE = 32
-'''
-DATA FORMAT
-"HEADER....16DATA"
-HEADER: [len|funcname]
-'''
+
+
 class Handler(DI, AC, Utils):
     @staticmethod
     def handle(connection,address):
@@ -51,23 +50,18 @@ class Handler(DI, AC, Utils):
 
     @staticmethod
     def getMethodByName(name):
-        #print(f'FINDING METHOD')
         mtds = inspect.getmembers(Handler, predicate=inspect.isfunction)
         for method in mtds:
             if method[0] == name:
-                #print(f'found method: {method[0]}')
                 return method[1]
         return None
     
     
     @staticmethod
     def handleKeyboard(data):
-        #print(f"HANDLING {data} ({type(data)})")
         try:
             key = Handler.ANDR_CODES[data]
-            #print(f"KEY {key}")
             keyhex = Handler.keyboard_key_mapping[key]
-            #print(f"KEYXEX {keyhex}")
         except:
             return
 
